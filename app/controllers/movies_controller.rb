@@ -2,10 +2,16 @@
 class MoviesController < ApplicationController
 
   def index
-    sort_key = params[:sort_by]
-    @movies = Movie.find(:all,
-    :order => sort_key)
-
+    @all_ratings = Movie.all_ratings
+    @sort_key = params[:sort_by]
+    @filter_ratings = params[:ratings]
+    if @filter_ratings.blank? == false
+      @filter_ratings = @filter_ratings.keys
+    else
+      @filter_ratings = @all_ratings
+    end
+    @movies = Movie.order(@sort_key)
+    # .find_all_by_rating(@filter_ratings)
   end
 
   def show
