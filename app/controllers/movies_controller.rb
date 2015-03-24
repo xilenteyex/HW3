@@ -2,6 +2,13 @@
 class MoviesController < ApplicationController
 
   def index
+    if not session.blank?
+      session.each do |k,v|
+        if params[k] == nil
+          params[k] = v
+        end
+      end
+    end
     @all_ratings = Movie.all_ratings
     @sort_key = params[:sort_by]
     @filter_ratings = params[:ratings]
@@ -11,6 +18,11 @@ class MoviesController < ApplicationController
       @filter_ratings = @all_ratings
     end
     @movies = Movie.order(@sort_key).find_all_by_rating(@filter_ratings)
+    if not params.blank?
+      params.each  do |k,v|
+        session[k] = v
+      end
+    end
   end
 
   def show
