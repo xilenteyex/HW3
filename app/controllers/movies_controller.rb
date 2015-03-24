@@ -10,8 +10,7 @@ class MoviesController < ApplicationController
     else
       @filter_ratings = @all_ratings
     end
-    @movies = Movie.order(@sort_key)
-    # .find_all_by_rating(@filter_ratings)
+    @movies = Movie.order(@sort_key).find_all_by_rating(@filter_ratings)
   end
 
   def show
