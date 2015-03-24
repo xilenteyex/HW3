@@ -4,9 +4,9 @@
 %table#movies
   %thead
     %tr
-      %th{:class=>("hilite" if @sort_key == "title")}= link_to 'Movie Title', movies_path(:sort_by=>"title")
+      %th{:class=>("hilite" if @sort_key == "title")}= link_to 'Movie Title', movies_path(:sort_by=>"title",:ratings => Hash[@filter_ratings.map {|y| [y,1]}])
       %th Rating
-      %th{:class=>("hilite" if @sort_key == "release_date")}= link_to 'Release Date', movies_path(:sort_by=>"release_date")
+      %th{:class=>("hilite" if @sort_key == "release_date")}= link_to 'Release Date', movies_path(:sort_by=>"release_date",:ratings => Hash[@filter_ratings.map {|y| [y,1]}])
       %th More Info
   %tbody
     - @movies.each do |movie|
@@ -24,5 +24,5 @@
     = rating
     = check_box_tag("ratings[#{rating}]", 'yes', @filter_ratings.include?(rating))
   = submit_tag 'Refresh'
-  = hidden_field_tag 'sort_by', @sort_by
+  = hidden_field_tag 'sort_by', @sort_key
 
